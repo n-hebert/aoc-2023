@@ -5,7 +5,7 @@
 ## Running
 
   1. You should have [Nix](https://nixos.org/) installed for best results
-    - If so, ensure you either run `nix-shell` at the top of the repo
+    - If so, ensure you run `nix-shell` at the top of the repo
   2. Otherwise, this is a BASH repo, Mac users and other ZSH-adherents are welcome to install a recent copy of BASH (>=4)
     - Once you do have BASH, you can run ./answer.bash to avoid the Nix-based shebangs
 
