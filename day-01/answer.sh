@@ -63,15 +63,12 @@ processTheWholeFileWithSed() {
     # THIRD REGEX - HAS AT LEAST TWO DIGITS ON THE LINE
     #   From the BOL ^, take the first [[:digit:]] and \(save\) it.  We can
     #   then accept any input, [[:digit:]]*, then a [[:digit:]] we'll save,
-    #   then the rest of the alpha's in the line until EOL, $ is seen
-
-    # FINAL REGEX - Clean the output. The last line shouldn't trail with '+'
+    #   then EOL, $, should be seen
     sed \
         "${WORDS_AS_DIGITS}"'
             s/[[:alpha:]]*//g
             s/^[[:digit:]]$/&&/
             s/^\([[:digit:]]\)[[:digit:]]*\([[:digit:]]\)$/\1\2/
-            $s/ +//
             ' "${INPUT_FILE}"
 
 }
@@ -93,7 +90,7 @@ main(){
     if [[ ${?} -eq 0 ]]; then
         # Echo it, split it to a file for debugging, swap all new-lines for
         # pluses, but remove any trailing plus
-        echo "${parsedContent}" | tee output | tr '\n' '+' | sed 's/+[[:space:]]*$/\n/' | bc -l
+        echo "${parsedContent}" | tee ${INPUT_FILE/input/output} | tr '\n' '+' | sed 's/+[[:space:]]*$/\n/' | bc -l
     else
         echo "ERR: Failed to parse" >/dev/stderr
     fi
