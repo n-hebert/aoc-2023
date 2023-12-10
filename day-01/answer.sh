@@ -1,5 +1,5 @@
 #!/usr/bin/env cached-nix-shell
-#!nix-shell -p bash bc gnused -i bash
+#!nix-shell -p bc gnused -i bash
 
 # Globals {
 INPUT_FILE="$(dirname "$(readlink -f "${0}")")/input"
