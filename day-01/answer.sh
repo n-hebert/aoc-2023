@@ -2,13 +2,15 @@
 #!nix-shell -p bash bc gnused -i bash
 
 # Globals {
-INPUT_FILE="$(dirname "$(readlink -f ${0})")/input"
+INPUT_FILE="$(dirname "$(readlink -f "${0}")")/input"
 MAX_INPUT_SIZE=$(wc -l "${INPUT_FILE}" | sed 's/ .*//')
 # }
 
+# Usage: usage
 usage() {
     cat <<EOS
 Usage: $(basename "$(readlink -f "${0}")") [--part 1]
+  Compute part-2 by default, unless instructed to do part-1
 EOS
 }
 
@@ -77,10 +79,15 @@ processTheWholeFileWithSed() {
 # Usage: main "${@}"
 #  Does the computation
 main(){
+    if [[ "${1}" == "--help" || "${1}" == "-h" ]]; then
+        usage
+        exit 0
+    fi
+
     # Unless someone says to stop, ham it up really badly
-    [[ -z ${PLZ_STOP} ]] && pretendToBeAComputerFromOldMovies "${@}"
+    [[ -z "${PLZ_STOP}" ]] && pretendToBeAComputerFromOldMovies "${@}"
     # Here's the actual code
-    parsedContent=$(processTheWholeFileWithSed "${@}")
+    parsedContent="$(processTheWholeFileWithSed "${@}")"
 
     # Ensure nothing failed before passing it into the calculator
     if [[ ${?} -eq 0 ]]; then
